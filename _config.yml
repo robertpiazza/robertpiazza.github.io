@@ -28,9 +28,9 @@ twitter_username: ConvolutedLearn
 github_username:  robertpiazza
 
 # Build settings
-theme: jekyll-theme-hydure
+remote_theme: zivong/jekyll-theme-hydure
 plugins:
-  - jekyll-feed
+  - jekyll-remote-theme
 
 # Exclude from processing.
 # The following items will not be processed, by default.
