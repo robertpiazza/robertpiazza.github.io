@@ -4,7 +4,6 @@ title:  "Data Science Projects"
 date:   2021-08-24 11:47:00 -0700
 categories: data_science machine_learning
 ---
-# Data Science Projects
 Repository containing data science projects completed by me for academic, self learning, and hobby purposes. Presented in the form of iPython Notebooks, and R markdown files (published at RPubs).
 
 

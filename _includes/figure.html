@@ -1,0 +1,55 @@
+{% if include.width %}
+  {% if include.caption %}
+  <figure>
+      {% if include.href %}
+      <a href="{{ include.href }}">
+          <img src="{{ include.src |relative_url}}" alt="{{ include.caption | strip }}" width={{include.width}}>
+      </a>
+      {% else %}
+      <a href="{{ include.src }}">
+          <img src="{{ include.src |relative_url}}" alt="{{ include.caption | strip }}" width={{include.width}}>
+      </a>
+      {% endif %}
+      <figcaption><span>{{ include.caption | strip }}</span></figcaption>
+  </figure>
+  {% else %}
+  <figure>
+      {% if include.href %}
+      <a href="{{ include.href }}">
+          <img src="{{ include.src |relative_url}}" alt="" width={{include.width}}>
+      </a>
+      {% else %}
+      <a href="{{ include.src }}">
+          <img src="{{ include.src |relative_url}}" alt="" width={{include.width}}>
+      </a>
+      {% endif %}
+  </figure>
+  {% endif %}
+{% else %}
+  {% if include.caption %}
+  <figure>
+      {% if include.href %}
+      <a href="{{ include.href }}">
+          <img src="{{ include.src |relative_url}}" alt="{{ include.caption | strip }}">
+      </a>
+      {% else %}
+      <a href="{{ include.src }}">
+          <img src="{{ include.src |relative_url}}" alt="{{ include.caption | strip }}">
+      </a>
+      {% endif %}
+      <figcaption><span>{{ include.caption | strip }}</span></figcaption>
+  </figure>
+  {% else %}
+  <figure>
+      {% if include.href %}
+      <a href="{{ include.href }}">
+          <img src="{{ include.src |relative_url}}" alt="">
+      </a>
+      {% else %}
+      <a href="{{ include.src }}">
+          <img src="{{ include.src |relative_url}}" alt="">
+      </a>
+      {% endif %}
+  </figure>
+  {% endif %}
+{% endif %}
