@@ -11,13 +11,8 @@ I'd like to show the methods I used for making progress on a puzzle I've had lay
 ## Goal
 I wanted to see if it would be possible to match pictures of individual puzzle pieces to the larger solution board automatically. I ended up using a variety of methods and finished with a hybrid that worked well.
 
-{%
-    include figure.html
-    src="assets/images/puzzle/BobaBox.png"
-    caption="Puzzle Box"
-    width="500"
-%}
-
+<img src="/assets/images/puzzle/BobaBox.png" alt="Puzzle Box" width="500">
+<figcaption><span>Puzzle Box</span></figcaption>
 ### Getting the puzzle piece image
 
 When capturing the puzzle piece, I took a relatively straight-on photo with my phone and for each image immediately cropped the image to just the piece leaving a little background. I also experimented with cropping to just the interior of some pieces but although this eliminated some false positives, it also removed a lot of edge features that could have been useful in matching. Finally, I tried to take images in good lighting (no flash-too much glare) and minimize the reflections off the pieces. These photos were synced over dropbox and icloud to locations where my program could immediately access them.
@@ -44,12 +39,9 @@ I also reached out to the puzzle maker buffalo games customer service to see if 
 
 Thankfully, the puzzle itself comes with a printed solution image of A3 size (equivalent of two standard 8.5x11" sheets). One can make out very fine details in the image which is incredibly helpful. I took that image to my scanner and ramped up the scanner to the highest density and scanned the bottom and top of the image. Despite my best efforts, I wasn't able to keep the image perfectly straight and it ended up being about 10 pixels shifted from top to bottom. Given it's a 4000+ pixel height, that's only .15 degrees off but it would impact some performance.
 
-{%
-    include figure.html
-    src="assets/images/puzzle/BobaFettHiRes.jpg"
-    caption="High resolution Boba Fett Image"
-    width="500"
-%}
+<img src="/assets/images/puzzle/BobaFettHiRes.jpg" alt="High resolution Boba Fett Image" width="500">
+<figcaption><span>High resolution Boba Fett Image</span></figcaption>
+
 ## Transforming the solution
 
 An unfortunate side effect of the scanning was that I also cut part of the middle slice of photos off and didn't realize it until midway through the process. During the next transform, I also adjusted the middle with black just so the spacing would be uniform and I'd visually be able to tell when there wasn't information about part of the image.
@@ -111,12 +103,8 @@ plt.xticks([]), plt.yticks([]),
 plt.show()
 ```
 
+<img src="/assets/images/puzzle/output_2_0.png" alt="" width="500">
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_2_0.png"
-    width="500"
-%}
 
 
 
@@ -127,20 +115,11 @@ The first attempt to match the puzzle pieces were based on matching exact copies
 ## Example:
 
 This piece:
-{%
-    include figure.html
-    src="assets/images/puzzle/IMG_0277_inside.jpg"
-    width="200"
-%}
+<img src="/assets/images/puzzle/IMG_0277_inside.jpg" alt="" width="200">
 
 should be found here:
 
-{%
-    include figure.html
-    src="assets/images/puzzle/inside_match.jpg"
-    width="600"
-%}
-
+<img src="/assets/images/puzzle/inside_match.jpg" alt="" width="600">
 
 The first attempt to find the location was using template matching. This method tries to find an exact replica of the small photo within the general scene and as we'll see isn't very robust.
 
@@ -185,57 +164,17 @@ for meth in methods:
 
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_4_0.png"
-%}
+<img src="/assets/images/puzzle/output_4_0.png" alt="">
 
+<img src="/assets/images/puzzle/output_4_1.png" alt="">
 
+<img src="/assets/images/puzzle/output_4_2.png" alt="">
 
+<img src="/assets/images/puzzle/output_4_3.png" alt="">
 
+<img src="/assets/images/puzzle/output_4_4.png" alt="">
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_4_1.png"
-%}
-
-
-
-
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_4_2.png"
-%}
-
-
-
-
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_4_3.png"
-%}
-
-
-
-
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_4_4.png"
-%}
-
-
-
-
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_4_5.png"
-%}
-
-
+<img src="/assets/images/puzzle/output_4_5.png" alt="" width="500">
 
 So we only got one match and that wasn't in the right spot. But that square is pretty large so what if we downsize the cropped image?
 
@@ -282,31 +221,13 @@ for meth in methods:
 ```
 
 
+<img src="/assets/images/puzzle/output_6_0.png" alt="">
+<img src="/assets/images/puzzle/output_6_1.png" alt="">
+<img src="/assets/images/puzzle/output_6_2.png" alt="">
+<img src="/assets/images/puzzle/output_6_3.png" alt="">
+<img src="/assets/images/puzzle/output_6_4.png" alt="">
+<img src="/assets/images/puzzle/output_6_5.png" alt="">
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_6_0.png"
-%}
-{%
-    include figure.html
-    src="assets/images/puzzle/output_6_1.png"
-%}
-{%
-    include figure.html
-    src="assets/images/puzzle/output_6_2.png"
-%}
-{%
-    include figure.html
-    src="assets/images/puzzle/output_6_3.png"
-%}
-{%
-    include figure.html
-    src="assets/images/puzzle/output_6_4.png"
-%}
-{%
-    include figure.html
-    src="assets/images/puzzle/output_6_5.png"
-%}
 
 
 So regardless of our preprocessing, the template matching doesn't seem to be working very well. It gave some places the piece might have been ok, but it never actually got the correct answer. Let's move on to ORB matching.
@@ -336,12 +257,8 @@ plt.show()
 ```
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_8_0.png"
-    width = "500"
-%}
 
+<img src="/assets/images/puzzle/output_8_0.png" alt="" width="500">
 
 
 When this was used to match to puzzle pieces, it would often produce results such as these:
@@ -391,12 +308,8 @@ FlannMatcher('IMG_0286.jpg', 'gap.jpg')
 ```
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_11_0.png"
-    caption="Matches everywhere and nowhere"
-%}
-
+<img src="/assets/images/puzzle/output_11_0.png" alt="Matches everywhere and nowhere">
+<figcaption><span>Matches everywhere and nowhere</span></figcaption>
 
 
 
@@ -405,24 +318,17 @@ FlannMatcher('IMG_0277_inside.jpg', 'gap.jpg')
 ```
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_12_0.png"
-    caption="Still not matching anything good"
-%}
-
+<img src="/assets/images/puzzle/output_12_0.png" alt="Still not matching anything good">
+<figcaption><span>Still not matching anything good</span></figcaption>
 
 
 I tried fiddling with many parameters of the matching algorithm, lighting the pieces in different ways, cropping to just the interior of the piece but I think the match algorithm kept getting confused that the pieces have matches all over the image and it just matches it to the absolute best one which could be totally random based on the compression used on the jpg images and how it affects individual instances of the same tiles.
 
 I also tried the SIFT algorithm which produced cool photos like this showing marker locations, size and orientations, but didn't do any better with the matching results
 
-{%
-    include figure.html
-    src="assets/images/puzzle/0286_Sift_solution.jpg"
-    caption="Pretty, but useless"    
-%}
 
+<img src="/assets/images/puzzle/0286_Sift_solution.jpg" alt="Pretty, but useless">
+<figcaption><span>Pretty, but useless</span></figcaption>
 ---
 
 
@@ -464,11 +370,7 @@ plt.show()
 ```
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_15_0.png"
-%}
-
+<img src="/assets/images/puzzle/output_15_0.png" alt="">
 
 
 # Using SURF (Speeded Up Robust Features) plus clustering
@@ -476,11 +378,8 @@ plt.show()
 
 The best result I had actually did give the position of the piece:
 
-{%
-    include figure.html
-    src="assets/images/puzzle/best_yet.jpg"
-    width = "500"
-%}
+
+<img src="/assets/images/puzzle/best_yet.jpg" alt="" width="500">
 
 This was using the SURF algorithm which turned out to be relatively quick at performing the calculations. However, it would typically give similar results as the above ORB where a lot of false positives would track all over the solution photo.
 
@@ -674,11 +573,8 @@ best_image('gap.jpg', 'IMG_0277_inside.jpg')
 
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_18_1.png"
-%}
 
+<img src="/assets/images/puzzle/output_18_1.png" alt="">
 
 
 
@@ -693,11 +589,8 @@ best_image('gap.jpg', 'IMG_0276_inside.png')
 
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_19_1.png"
-%}
 
+<img src="/assets/images/puzzle/output_19_1.png" alt="">
 
 
 
@@ -711,11 +604,7 @@ best_image('gap.jpg', 'IMG_0286.jpg')
 
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_20_1.png"
-%}
-
+<img src="/assets/images/puzzle/output_20_1.png" alt="">
 
 
 ### These are working great!!
@@ -727,11 +616,9 @@ I'd like to move on to the tile slicing method that I also tried implementing an
 ## Slicing the tiles
 
 Now we have a straightened photo, I need to make sure the individual tiles are evenly spaced but due to the break in the middle where the two scans were merged, this is not valid. I opened the image in a simple image editor and shifted the bottom half down 25 pixels. This cut off a little of the bottom but didn't affect performance. Using the same image editor, I also counted how many pixel were on the left and top before the first tiles so we would only cluster full size tiles. These offsets were 54 pixels on the right and 4 pixels on the top. For the overall width of each cell, I also needed to know the offset on the right and bottom which were 53 and 14 respectively.
-{%
-    include figure.html
-    src="assets/images/puzzle/gap.jpg"
-    width = "500"
-%}
+
+
+<img src="/assets/images/puzzle/gap.jpg" alt="" width="500">
 
 I then overlaid a grid on this to ensure the slices would be valid photos and not slicing through the middle of some which would throw off the clustering later.
 
@@ -766,11 +653,8 @@ plt.show()
 
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_23_0.png"
-%}
 
+<img src="/assets/images/puzzle/output_23_0.png" alt="">
 
 Looks like the grid is matching very well with the tiles!
 
@@ -803,11 +687,8 @@ plt.show()
 
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_25_0.png"
-%}
 
+<img src="/assets/images/puzzle/output_25_0.png" alt="">
 
 
 ### Hello low-res C3PO and R2D2!
@@ -856,106 +737,27 @@ for cluster_index in range(20):
 ```
 
 
+<img src="/assets/images/puzzle/output_31_0.png" alt="">
+<img src="/assets/images/puzzle/output_31_1.png" alt="">
+<img src="/assets/images/puzzle/output_31_2.png" alt="">
+<img src="/assets/images/puzzle/output_31_3.png" alt="">
+<img src="/assets/images/puzzle/output_31_4.png" alt="">
+<img src="/assets/images/puzzle/output_31_5.png" alt="">
+<img src="/assets/images/puzzle/output_31_6.png" alt="">
+<img src="/assets/images/puzzle/output_31_7.png" alt="">
+<img src="/assets/images/puzzle/output_31_8.png" alt="">
+<img src="/assets/images/puzzle/output_31_9.png" alt="">
+<img src="/assets/images/puzzle/output_31_10.png" alt="">
+<img src="/assets/images/puzzle/output_31_11.png" alt="">
+<img src="/assets/images/puzzle/output_31_12.png" alt="">
+<img src="/assets/images/puzzle/output_31_13.png" alt="">
+<img src="/assets/images/puzzle/output_31_14.png" alt="">
+<img src="/assets/images/puzzle/output_31_15.png" alt="">
+<img src="/assets/images/puzzle/output_31_16.png" alt="">
+<img src="/assets/images/puzzle/output_31_17.png" alt="">
+<img src="/assets/images/puzzle/output_31_18.png" alt="">
+<img src="/assets/images/puzzle/output_31_19.png" alt="">
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_0.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_1.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_2.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_3.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_4.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_5.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_6.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_7.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_8.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_9.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_10.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_11.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_12.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_13.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_14.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_15.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_16.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_17.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_18.png"
-%}
-
-{%
-    include figure.html
-    src="assets/images/puzzle/output_31_19.png"
-%}
 
 It appears some of the groups are very well group but others are just more random groupings of images with no intuitive reason for why they were clustered. This will still be very useful though.
 
@@ -1053,11 +855,7 @@ plt.show()
     28  matched points  0  partials
 
 
-{%
-    include figure.html
-    src="assets/images/puzzle/output_35_1.png"
-%}
-
+<img src="/assets/images/puzzle/output_35_1.png" alt="">
 
 ### We found the correct location!
 
