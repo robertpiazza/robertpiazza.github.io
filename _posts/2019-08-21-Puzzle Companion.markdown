@@ -856,6 +856,7 @@ plt.show()
 
 
 <img src="/assets/images/puzzle/output_35_1.png" alt="">
+<figcaption><span>Multiple Stacked Boxes in Bottom Right Show Correct Location</span></figcaption>
 
 ### We found the correct location!
 
