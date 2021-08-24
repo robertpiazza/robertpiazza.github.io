@@ -13,7 +13,7 @@ _Note: Data used in the projects (accessed under Datasets) is for demonstration 
 ## Contents
 
 - ### Computer Vision
-	- [Applying Computer Vision to Solving a Jigsaw Puzzle](data_science/computer_vision/2019/08/21/Puzzle-Companion.html)[alternate link](https://nbviewer.jupyter.org/github/robertpiazza/Puzzles/blob/master/PuzzleCompanion.ipynb): Using various computer vision methods and the OpenCV library to match puzzle pieces with a canvas. 
+	- [Applying Computer Vision to Solving a Jigsaw Puzzle]({% post_url 2019-08-21-Puzzle Companion %})[(alternate link)](https://nbviewer.jupyter.org/github/robertpiazza/Puzzles/blob/master/PuzzleCompanion.ipynb): Using various computer vision methods and the OpenCV library to match puzzle pieces with a canvas.
 
 - ### Machine Learning
 
