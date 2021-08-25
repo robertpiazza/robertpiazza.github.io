@@ -14,7 +14,7 @@ My big takeaways from the book that I continue to implement:
 
 1. Have a spot to dump all your tasks. For me, this is Todoist. Don't keep them in your head.
 2. Two-minute rule. If you can do it in two minutes, just do it, it's not worth tracking.
-3. Don't be amorphous with tasks - ask what's the next action that moves this forward? 
+3. Don't be amorphous with tasks - ask what's the next action that moves this forward?
 
 The following are my favorite portions from the book that I highlighted:
 
@@ -31,8 +31,8 @@ The following are my favorite portions from the book that I highlighted:
 ### Chapter 2: Getting Control of Your Life: The Five Steps of Mastering Workflow
 
 
-- We 
-1. *Capture* what has our attention; 
+- We
+1. *Capture* what has our attention;
 2. *Clarify* what each item means and what to do about it;
 3. *Organize* the results
 4. *Reflect* on those results
@@ -96,5 +96,3 @@ Tips:- Have as many in-trays as you need and as few as you can get by with.- E
 ### Chapter 15: The Path of GTD Mastery
 
 - GTD IS ACTUALLY a lifelong practice with multiple levels of mastery. It is very similar to playing an instrument like the violin, a sport like tennis, or a game like chess. It’s like mathematics, pottery, art history, or even parenting. All of these endeavors involve learning and applying a particular set of moves and techniques, and there’s no end to how good you can become at them, or how many subtleties there are to explore.- Fully utilizing the “Waiting For” category, such that every expected deliverable from others is inventoried and reviewed for follow-up in adequate timing- Using Agenda lists to capture and manage communications with others- Another piece of good news is that even if a person has gleaned only a few concepts from this material, or has not implemented the system regularly, it can bring marked improvement. If you “get” nothing more than the two-minute rule, it will be worth its weight in gold. If you just write down a few more things on your mind than you would have previously, you’ll sleep better. If you clean up e-mail to zero at least every once in a while, you will have great cause for celebration. And if you simply ask, “What’s the next action?” of yourself or anyone else when you might not have otherwise, it will add to your stress-free productivity.- Why are you getting that e-mail? What’s the purpose of that meeting, and why do you have to attend? What’s coming up next quarter that you need to start dealing with now? What “projects” need to become “someday/ maybes,” and vice versa, because of some of the larger changes going on?- The power to produce produces powerful possibilities.\*- Conclusion- Get your personal physical organization hardware set up. Get your workstation organized.- Create a workable and easily accessed personal reference system—for work and home.- Give yourself permission to make any changes that you have been contemplating for enhancing your work environments. Hang pictures, buy pens, toss stuff, and rearrange your workspace. Support your fresh start.- Set aside time when you can tackle one whole area of your office, and then each part of your house.- Share anything of value you’ve gleaned from this with someone else. (It’s the fastest way to learn.)
-
-

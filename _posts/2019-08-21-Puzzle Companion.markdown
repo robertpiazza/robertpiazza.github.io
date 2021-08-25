@@ -4,6 +4,8 @@ title:  "Puzzle Solver"
 date:   2019-08-21 12:00:00 -0700
 categories: data_science computer_vision
 ---
+## Using Computer Vision to Cheat on a Puzzle
+
 ## Background
 
 I'd like to show the methods I used for making progress on a puzzle I've had laying on a table for three months and was getting frustrated over the lost space and clutter. It's worked out reasonably well and I'll share my files on GitHub for anyone who wants to use them as well.
