@@ -1232,8 +1232,7 @@ plt.show()
 ```
 
 
-    
-![png](output_19_0.png)
+<img src="/assets/images/rankings/output_19_0.png">    
     
 
 
@@ -1254,7 +1253,7 @@ cv = KFold(n_splits = 10, random_state=10, shuffle=True)
 
 #create model
 scaler = StandardScaler()
-logreg = LogisticRegression(random_state=RANDOM_STATE,C=3, solver='lbfgs')
+logreg = LogisticRegression(random_state=RANDOM_STATE,C=1, solver='lbfgs')
 
 #simple pipeline of normalizing all the stats then applying logistic regression
 pipe = make_pipeline(scaler, logreg)
@@ -1291,8 +1290,7 @@ plt.show()
     
 
 
-    
-![png](output_22_1.png)
+<img src="/assets/images/rankings/output_22_1.png">
     
 
 
@@ -1313,7 +1311,7 @@ plt.show()
 
 
     
-![png](output_25_0.png)
+<img src="/assets/images/rankings/output_25_0.png">
     
 
 
@@ -1845,7 +1843,7 @@ plt.show()
 
 
     
-![png](output_36_1.png)
+<img src="/assets/images/rankings/output_36_1.png">
     
 
 
