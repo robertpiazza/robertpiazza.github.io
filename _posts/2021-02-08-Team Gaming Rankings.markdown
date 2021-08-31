@@ -2249,4 +2249,4 @@ If you'd like to see the tableau page of the latest stats, they can be found [he
 
 <iframe seamless frameborder="0" src="https://public.tableau.com/views/Generals/Overall?:embed=yes&:display_count=n&:showVizHome=no" width = '1000' height = '800' scrolling='yes' ></iframe>
 
-For a more interactive version click [here](https://public.tableau.com/views/Generals/Overall?:embed=yes&:display_count=n&:showVizHome=no)    
+For a more interactive version click *[here]*(https://public.tableau.com/views/Generals/Overall?:embed=yes&:display_count=n&:showVizHome=no)    
