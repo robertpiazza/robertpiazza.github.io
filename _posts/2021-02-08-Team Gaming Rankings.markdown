@@ -2247,4 +2247,6 @@ This was a great project for taking each person's individual stats, creating som
 
 If you'd like to see the tableau page of the latest stats, they can be found [here](https://public.tableau.com/app/profile/robert.piazza/viz/Generals/Overall) but I've also attempted to embed it below.
 
-<iframe seamless frameborder="0" src="https://public.tableau.com/app/profile/robert.piazza/viz/Generals/Overall?:embed=yes&:display_count=yes&:showVizHome=no" width = '1000' height = '800' scrolling='yes' ></iframe>    
+<iframe seamless frameborder="0" src="https://public.tableau.com/views/Generals/Overall?:embed=yes&:display_count=n&:showVizHome=no" width = '1000' height = '800' scrolling='yes' ></iframe>
+
+For a more interactive version click [here](https://public.tableau.com/views/Generals/Overall?:embed=yes&:display_count=n&:showVizHome=no)    
