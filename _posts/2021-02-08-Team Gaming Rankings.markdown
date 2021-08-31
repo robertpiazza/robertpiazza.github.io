@@ -157,7 +157,7 @@ games.head()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -326,7 +326,7 @@ games.describe()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -538,7 +538,7 @@ games.head()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -738,7 +738,7 @@ df.head()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -805,7 +805,7 @@ games_copy.head()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1061,7 +1061,7 @@ X_generated.head()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1508,7 +1508,7 @@ all_runs
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1906,7 +1906,7 @@ pd.DataFrame(sheets_stats[1:], columns=sheets_stats[0])
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe" style="width: 100%;">
   <thead>
     <tr style="text-align: right;">
       <th></th>
