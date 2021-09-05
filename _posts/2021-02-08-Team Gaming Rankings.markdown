@@ -2232,8 +2232,8 @@ for i, rows in enumerate(sheets_stats):
         pass
 
 #add a final name of 'None' with a value of 0 so it tableau doesn't have to have eight people every time
-sheet.cell(row=len(games.Name.unique())+1, column=1).value = 'None'
-sheet.cell(row=len(games.Name.unique())+1, column=2).value = 0
+sheet.cell(row=len(games.Name.unique())+2, column=1).value = 'None'
+sheet.cell(row=len(games.Name.unique())+2, column=2).value = 0
 workbook.save(filename="Generals Statistics.xlsx")   
 
  
@@ -2248,3 +2248,6 @@ If you'd like to see the tableau page of the latest stats, they can be found [he
 <iframe seamless frameborder="0" src="https://public.tableau.com/views/Generals/Overall?:embed=yes&:display_count=n&:showVizHome=no" width = '1000' height = '800' scrolling='yes' ></iframe>
 
 For a more interactive version click *[here](https://public.tableau.com/views/Generals/Overall?:embed=yes&:display_count=n&:showVizHome=no)*
+
+
+https://public.tableau.com/views/LifegroupTraxxNight/TraxxRaceStats?:language=en-US&publish=yes&:display_count=n&:showVizHome=no
