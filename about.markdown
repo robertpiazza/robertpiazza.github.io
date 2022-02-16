@@ -9,7 +9,5 @@ I (Robert Piazza) live in Seattle with my wife and two rabbits. I'm a lifelong l
 This blog is my repository to record when I learn about something new and want to share it out. 
 
 Topics will include:
-- Data Science/Machine Learning
-- Book Notes
-- Personal Finance
-- General Life Lessons
+- Data Science/Machine Learning/Deep Learning
+
