@@ -128,7 +128,7 @@ Perhaps check out the [list of ML approaches](/List of ML Approaches/)
 
 ## Deep Learning Should Continue
 
-Deep learning has on it's side the following advantages:
+Deep learning has on its side the following advantages:
 
 - Simplicity
 - Scalability
