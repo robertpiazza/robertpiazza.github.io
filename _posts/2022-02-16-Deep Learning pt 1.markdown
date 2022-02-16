@@ -4,6 +4,7 @@ title:  "Deep Learning Part 1"
 date:   2022-02-16
 categories: data_science deep_learning
 ---
+
 # Deep Learning Part 1 - What is Deep Learning?
 
 This will be part of a series of posts for my own reference and continued professional development in deep learning. It should mostly follow important points taken from François Chollet's book Deep Learning with Python, Second Edition. 
