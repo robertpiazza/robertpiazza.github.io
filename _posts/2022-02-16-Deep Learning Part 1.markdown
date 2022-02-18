@@ -2,7 +2,7 @@
 layout: post
 title:  "Deep Learning Part 1"
 date:   2022-02-16
-categories: data_science deep_learning
+categories: deep_learning
 ---
 
 # Deep Learning Part 1 - What is Deep Learning?

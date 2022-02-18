@@ -2,7 +2,7 @@
 layout: post
 title:  "Jupyter Environments"
 date:   2022-02-15
-categories: data_science deep_learning
+categories: deep_learning
 ---
 # How to Create a New Python Environment in Anaconda and Use it in Jupyter Notebooks
 
