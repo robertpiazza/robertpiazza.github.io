@@ -1,9 +1,3 @@
----
-layout: post
-title:  "Deep Learning Part 2"
-date:   2022-02-17
-categories: data_science
----
 ```python
 # conda create --name deep-learning
 # conda activate deep-learning
@@ -187,21 +181,21 @@ model.fit(train_images, train_labels, epochs=5, batch_size=128)
 ```
 
     Epoch 1/5
-    469/469 [==============================] - 2s 3ms/step - loss: 0.2557 - accuracy: 0.9257
+    469/469 [==============================] - 2s 3ms/step - loss: 0.2579 - accuracy: 0.9254
     Epoch 2/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.1030 - accuracy: 0.9694
+    469/469 [==============================] - 2s 3ms/step - loss: 0.1049 - accuracy: 0.9691
     Epoch 3/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.0675 - accuracy: 0.9796
+    469/469 [==============================] - 1s 3ms/step - loss: 0.0695 - accuracy: 0.9793
     Epoch 4/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.0488 - accuracy: 0.9856
+    469/469 [==============================] - 1s 3ms/step - loss: 0.0502 - accuracy: 0.9848
     Epoch 5/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.0372 - accuracy: 0.9890
+    469/469 [==============================] - 1s 3ms/step - loss: 0.0377 - accuracy: 0.9888
     
 
 
 
 
-    <keras.callbacks.History at 0x1ff057de190>
+    <keras.callbacks.History at 0x21965d9e190>
 
 
 
@@ -221,9 +215,9 @@ predictions[0]
 
 
 
-    array([3.49187546e-09, 1.28081851e-10, 7.26641076e-07, 9.56786389e-05,
-           1.91619528e-12, 1.10672689e-08, 2.23948379e-14, 9.99898076e-01,
-           1.29563835e-08, 5.47320997e-06], dtype=float32)
+    array([1.2659244e-10, 4.6564801e-11, 9.7060592e-07, 4.3473542e-06,
+           7.4439471e-14, 1.4966636e-08, 2.5408643e-16, 9.9999452e-01,
+           5.4953309e-09, 1.7923185e-07], dtype=float32)
 
 
 
@@ -251,7 +245,7 @@ predictions[0][7]
 
 
 
-    0.9998981
+    0.9999945
 
 
 
@@ -293,7 +287,7 @@ plt.show()
 
 
     
-<img src="/assets/images/DLwPCh2/output_30_0.png">
+![png](output_30_0.png)
     
 
 
@@ -328,7 +322,7 @@ plt.show()
 
 
     
-<img src="/assets/images/DLwPCh2/output_32_0.png">
+![png](output_32_0.png)
     
 
 
@@ -349,11 +343,82 @@ test_loss, test_acc = model.evaluate(test_images, test_labels)
 print(f"test_acc: {test_acc}")
 ```
 
-    313/313 [==============================] - 0s 818us/step - loss: 0.0669 - accuracy: 0.9797
-    test_acc: 0.9797000288963318
+    313/313 [==============================] - 0s 873us/step - loss: 0.0699 - accuracy: 0.9796
+    test_acc: 0.9796000123023987
     
 
 If we compare this accuracy on the test set vs. the training set, we got 97.92% on this whereas we scored 98.9% on the training data. This is a textbook example of the system overfitting onto the training data. More on overfitting will be in the [next part](https://robertpiazza.com/deep_learning/2022/02/18/Deep-Learning-Part-3.html). 
+
+Let's do it again but show the accuracies with a graph. You'll note the accuracy on the validation set from the overfitting doesn't improve nearly as quickly which could be improved with a dropout layer. 
+
+
+```python
+import tensorflow as tf
+
+# Load the TensorBoard notebook extension
+%load_ext tensorboard
+import datetime
+
+def create_model():
+  return tf.keras.models.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dense(512, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+  ])
+
+(x_train, y_train),(x_test, y_test) = mnist.load_data()
+x_train, x_test = x_train / 255.0, x_test / 255.0
+
+model = create_model()
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+
+model.fit(x=x_train, 
+          y=y_train, 
+          epochs=5, 
+          validation_data=(x_test, y_test), 
+          callbacks=[tensorboard_callback])
+
+%tensorboard --logdir logs/fit
+```
+
+    Epoch 1/5
+    1875/1875 [==============================] - 4s 2ms/step - loss: 0.2026 - accuracy: 0.9409 - val_loss: 0.1076 - val_accuracy: 0.9651
+    Epoch 2/5
+    1875/1875 [==============================] - 3s 2ms/step - loss: 0.0802 - accuracy: 0.9750 - val_loss: 0.0797 - val_accuracy: 0.9762
+    Epoch 3/5
+    1875/1875 [==============================] - 3s 2ms/step - loss: 0.0517 - accuracy: 0.9838 - val_loss: 0.0726 - val_accuracy: 0.9782
+    Epoch 4/5
+    1875/1875 [==============================] - 3s 2ms/step - loss: 0.0365 - accuracy: 0.9886 - val_loss: 0.0767 - val_accuracy: 0.9789
+    Epoch 5/5
+    1875/1875 [==============================] - 3s 2ms/step - loss: 0.0276 - accuracy: 0.9909 - val_loss: 0.0726 - val_accuracy: 0.9791
+    
+
+
+    Reusing TensorBoard on port 6006 (pid 7236), started 1:16:58 ago. (Use '!kill 7236' to kill it.)
+
+
+
+
+<iframe id="tensorboard-frame-35235369c71f4376" width="100%" height="800" frameborder="0">
+</iframe>
+<script>
+  (function() {
+    const frame = document.getElementById("tensorboard-frame-35235369c71f4376");
+    const url = new URL("/", window.location);
+    const port = 6006;
+    if (port) {
+      url.port = port;
+    }
+    frame.src = url;
+  })();
+</script>
+
+
 
 Next we'll learn about tensors, tensor operations, and gradient descent.
 
@@ -544,7 +609,7 @@ plt.show()
 
 
     
-<img src="/assets/images/DLwPCh2/output_55_0.png">
+![png](output_56_0.png)
     
 
 
@@ -767,7 +832,7 @@ for _ in range(1000):
 print("Took: {0:.4f} s".format(time.time() - t0))
 ```
 
-    Took: 0.0040 s
+    Took: 0.0030 s
     
 
 
@@ -779,7 +844,7 @@ for _ in range(1000):
 print("Took: {0:.2f} s".format(time.time() - t0))
 ```
 
-    Took: 1.74 s
+    Took: 1.83 s
     
 
 ### Broadcasting
@@ -955,55 +1020,260 @@ x.shape
 
 ### Geometric interpretation of tensor operations
 
+All tensor ops can be represented as a transformation in a geomtric space. 
+
+Nasa has a good explanation about [vector addition](https://www.grc.nasa.gov/WWW/K-12/airplane/vectadd.html)
+
+![vector addition](https://www.grc.nasa.gov/WWW/K-12/airplane/Images/vectadd.gif)
+
+
+
+
+
+- Vector addition translates one vector in the direction of the other.
+
+$\begin{bmatrix} 
+	Horizontal Factor \\
+	Vertical Factor \\
+	\end{bmatrix} + 
+    \begin{bmatrix} 
+	x \\
+	y \\
+	\end{bmatrix}$
+
+- Vector rotation of an angle can be accomplished via dot product 
+
+$\begin{bmatrix} 
+	cos(\theta) & -sin(\theta) \\
+	sin(\theta) & cos(\theta) \\
+	\end{bmatrix} •
+    \begin{bmatrix} 
+	x \\
+	y \\
+	\end{bmatrix}$
+
+- Scaling accomplished via vertical and horizontal scaling
+
+$\begin{bmatrix} 
+	Horizontal Factor & 0 \\
+	0 & Vertical Factor \\
+	\end{bmatrix} •
+    \begin{bmatrix} 
+	x \\
+	y \\
+	\end{bmatrix}$
+    
+- Linear Transform - a dot product with an arbitrary matrix - this includes scaling and rotation in two specific cases
+
+- Affine Transforms combine a linear transform with translation and is the most general.
+
+[Wikipedia](https://en.wikipedia.org/wiki/Affine_transformation) has an excellent reference of different matrix operations for completing affine geometric transformations
+
+Since this is the most generic, it follows the format of $y = W • x + b$ 
+
+A Dense layer without an activation function is an affine layer!
+
+Without activatation functions, each layer of a dense layer could be combined into a single affine transform. By adding the activation functions, we get much more non-linear transformations and expand the possibilities of data representation with much more potential. 
+
+<img src="/assets/images/DLwPCh2/Affine-ReLu.png">
+
+
+
 ### A geometric interpretation of deep learning
+
+- An intuitive explanation of deep learning is to crumple two different colored pieces of paper into a ball, and the transformations are a series of movements of the paper to flatten them out so they can be re-separated. Machine learning applies this but in much higher dimensional feature space than the 3D example of a crumpled paper ball. 
+
+
 
 ## The engine of neural networks: gradient-based optimization
 
+Dense layer applies the function of $y = relu(W • x + b)$ 
+
+x would be the input data, and W and b are the trainable parameters, commonly called the weights and biases. 
+
+When training a network, these values start randomly but the process of gradient optimization pushes those initial parameters to something more useful based on the goal and feedback. 
+
+A loop is required for this training to occur:
+
+1. Get training examples with their targets
+2. Run the model on the training examples to get predictions
+3. Calculate the difference or loss between targets and predictions
+4. Update the weights and biases of the model to slightly reduce the loss
+
+Steps 1 through 3 are relatively trivial - 1 reads the data stored, 2 is our series of relu functions on the affine transformations, and 3 is a simple difference between the two. 
+
+But step four is the complicated part, we want to update all the parameters all at once to make this efficient. Operations research methods would hold everything constant and move one parameter and see how it affected the loss by redoing step 2 and 3 but to run it forward twice to check which way the parameter should be adjusted for a single parameter among thousands or millions would be ridiculously inefficient. To do this properly, we're going to learn about gradient descent. 
+
+
+
 ### What's a derivative?
+
+- Given a continuous function, the slope of the function at any point is the derivative. It gives the rate of change of the function at any point. For a line, this is a trivial constant because it's rate of change is constant. For the $x^2$ function, the function of its function is $2x$
+
+- Even if the derivative isn't linear, we can always perform a first-order appoximation of the derivative at any point in x with a linear approximation of the derivative. This is useful for telling us the direction of the function x and magnitude. 
+
+- So if we have an optimization function and we're looking for the value of x to minimize the loss, we just need to adjust x in the opposite direction of the current derivative. If the slope is negative, move it in the positive direction, and the amount of movement is proportional to the magnitude of the derivative. 
+
 
 ### Derivative of a tensor operation: the gradient
 
-### Stochastic gradient descent
+- gradients are the generalization of the concept of derivatives to function that take tensors as inputs. 
+
+- If $W_0$ is the tensor of initial weights, then the gradient will be a tensor indicating the direction of steepest ascent of $loss value = f(W)$ around $W_0$. Any partial derivative is the slope of $f$ in any specific direction. 
+
+Therefore, we can update our weights with the simple equation $W_1 = W_0 - step*grad(f(W_0), W_0)$
+
+where $step$ is a scaling factor, usually designated with alpha $\alpha$
+
+This process will lower you on the function curve and reduce your loss. 
+
+Alpha is required due to the loss only being approximated close to $W_0$ so we don't want to wander too far from our initial location. 
+
+
+
+### Stochastic gradient descent (SGD)
+
+In neural nets, the loss function will be a minimum when the gradient is 0. Not every 0 is the global minimum but the global minimum will have a gradient of 0. 
+For lower order polynomial functions, this value could be calculated directly, however, for neural nets, the order of magnitude are in the thousands or millions and are intractable for direct computation. (At least while we don't have [quantum](https://lzylili.medium.com/rethinking-gradient-descent-with-quantum-natural-gradient-330da14f621) calculation capabilities for tunneling directly to the answer.)
+<img src="/assets/images/DLwPCh2/gradient_descent.gif">
+
+- Adagrad and RMSprop are common optimizers for implementing gradient descent with momentum
+
+- If the learning rate is too small, the solution won't converge quickly, if it's too large, the solution will be overshot. 
+
+- True SGD computes the error one training example at a time, batch SGD updates after going over every single training example. A good compromise for efficiency is mini-batch SGD where one uses a reasonable number of examples and update based on their combined error. 
+
+- Momentum takes into account, not only the current gradient, but the previous gradients as well. 
+
+Nominal implementation:
+```
+past_velocity = 0. 
+momentum = 0.1
+while loss > 0.01:
+    w, loss, gradient = get_current_parameters()
+    velocity = past_velocity * momentum - learning_rate * gradient
+    w = w + momentum * velocity - learning_rate * gradient
+    past_velocity = velocity
+    update_parameter(w)
+```
 
 ### Chaining derivatives: The Backpropagation algorithm
 
+- The Backpropagation algorithm gives us a way to use gradient for the loss function of our neural nets and update the weights.
+
 #### The chain rule
+
+- Each simple tensor operation (relu, dot product, addition) has another simple known derivative. We use the chain rule to combine these operations into a single operation to find the overall derivative. 
+
+For a given function fg(x) where fg(x) is defined as f(g(x)), the chain rule states that the derivative or gradient of the new combined function `grad(f(g(x),x) == grad(f(g(x)),g(x)) * grad(g(x), x)`
+
+In pseudocode form, for four functions nested together: 
+
+```
+def fghj(x):
+    x1 = j(x)
+    x2 = h(x1)
+    x3 = g(x2)
+    y = f(x3)
+    return y
+ 
+grad(y, x) == (grad(y, x3) * grad(x3, x2) *
+               grad(x2, x1) * grad(x1, x))
+
+```
+
+
+
+
 
 #### Automatic differentiation with computation graphs
 
+- A **computation graph** is a data structure showing a directed acyclic graph of operations. 
+
+Our two-layer network computation graph:
+
+<img src = "/assets/images/DLwPCh2/two layer model computation graph.png">
+
+- They allow us to treat computations as data
+
+- Modern libraries carryout automatic differentiation to take the created structure of the neural net and automatically compute the gradient based on the derivatives of the parts. It's a hard problem that's been simplified by modern tools. 
+
+- If you'd really like to dive into the math of how backpropogation works, consider [this example](https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/) and the following [geogebra](https://beta.geogebra.org/m/dyq2rcup) file
+
+
+
 #### The gradient tape in TensorFlow
+
+- Tensorflow's implementation of automatic differentiation
 
 
 ```python
+#works with scalers
+
 import tensorflow as tf
 x = tf.Variable(0.)
 with tf.GradientTape() as tape:
     y = 2 * x + 3
 grad_of_y_wrt_x = tape.gradient(y, x)
+grad_of_y_wrt_x
 ```
 
 
+
+
+    <tf.Tensor: shape=(), dtype=float32, numpy=2.0>
+
+
+
+
 ```python
+#works with tensor operations
+
 x = tf.Variable(tf.random.uniform((2, 2)))
 with tf.GradientTape() as tape:
     y = 2 * x + 3
 grad_of_y_wrt_x = tape.gradient(y, x)
+grad_of_y_wrt_x
 ```
 
 
+
+
+    <tf.Tensor: shape=(2, 2), dtype=float32, numpy=
+    array([[2., 2.],
+           [2., 2.]], dtype=float32)>
+
+
+
+
 ```python
+# Also works with list of variables
+
 W = tf.Variable(tf.random.uniform((2, 2)))
 b = tf.Variable(tf.zeros((2,)))
 x = tf.random.uniform((2, 2))
 with tf.GradientTape() as tape:
     y = tf.matmul(x, W) + b
 grad_of_y_wrt_W_and_b = tape.gradient(y, [W, b])
+grad_of_y_wrt_W_and_b
 ```
+
+
+
+
+    [<tf.Tensor: shape=(2, 2), dtype=float32, numpy=
+     array([[0.16477036, 0.16477036],
+            [1.1502832 , 1.1502832 ]], dtype=float32)>,
+     <tf.Tensor: shape=(2,), dtype=float32, numpy=array([2., 2.], dtype=float32)>]
+
+
 
 ## Looking back at our first example
 
 
 ```python
+#input data
+
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 train_images = train_images.reshape((60000, 28 * 28))
 train_images = train_images.astype("float32") / 255
@@ -1013,6 +1283,8 @@ test_images = test_images.astype("float32") / 255
 
 
 ```python
+#our model
+
 model = keras.Sequential([
     layers.Dense(512, activation="relu"),
     layers.Dense(10, activation="softmax")
@@ -1021,6 +1293,8 @@ model = keras.Sequential([
 
 
 ```python
+#model compilation
+
 model.compile(optimizer="rmsprop",
               loss="sparse_categorical_crossentropy",
               metrics=["accuracy"])
@@ -1028,29 +1302,35 @@ model.compile(optimizer="rmsprop",
 
 
 ```python
+#training step
+
 model.fit(train_images, train_labels, epochs=5, batch_size=128)
 ```
 
     Epoch 1/5
-    469/469 [==============================] - 2s 3ms/step - loss: 0.2573 - accuracy: 0.9257
+    469/469 [==============================] - 2s 3ms/step - loss: 0.2527 - accuracy: 0.9270
     Epoch 2/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.1044 - accuracy: 0.9696
+    469/469 [==============================] - 1s 3ms/step - loss: 0.1029 - accuracy: 0.9696
     Epoch 3/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.0688 - accuracy: 0.9789
+    469/469 [==============================] - 2s 3ms/step - loss: 0.0690 - accuracy: 0.9790
     Epoch 4/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.0507 - accuracy: 0.9848
+    469/469 [==============================] - 2s 3ms/step - loss: 0.0502 - accuracy: 0.9844
     Epoch 5/5
-    469/469 [==============================] - 1s 3ms/step - loss: 0.0381 - accuracy: 0.9882
+    469/469 [==============================] - 2s 3ms/step - loss: 0.0382 - accuracy: 0.9887
     
 
 
 
 
-    <keras.callbacks.History at 0x1ff1529b880>
+    <keras.callbacks.History at 0x21976c28730>
 
 
+
+Note that each iteration over the entire training set is called an **epoch**
 
 ### Reimplementing our first example from scratch in TensorFlow
+
+- Not implementing backpropagation or basic tensor operations
 
 #### A simple Dense class
 
@@ -1062,23 +1342,32 @@ class NaiveDense:
     def __init__(self, input_size, output_size, activation):
         self.activation = activation
 
+        #Create a matrix, W, of shpae (input_size, output_size),
+        #Initialized with random values
         w_shape = (input_size, output_size)
         w_initial_value = tf.random.uniform(w_shape, minval=0, maxval=1e-1)
         self.W = tf.Variable(w_initial_value)
 
+        #Create a vector, b, of shape (output_size,) initialized with zeros
         b_shape = (output_size,)
         b_initial_value = tf.zeros(b_shape)
         self.b = tf.Variable(b_initial_value)
 
+    #Create capability for a forward pass
     def __call__(self, inputs):
         return self.activation(tf.matmul(inputs, self.W) + self.b)
 
+    #Add the capability of retrieving the layer's weights
     @property
     def weights(self):
         return [self.W, self.b]
+    
+    
 ```
 
 #### A simple Sequential class
+
+This class will chain the layers together
 
 
 ```python
@@ -1086,12 +1375,14 @@ class NaiveSequential:
     def __init__(self, layers):
         self.layers = layers
 
+    #Calls underlying layers on the inputs, in order. 
     def __call__(self, inputs):
         x = inputs
         for layer in self.layers:
            x = layer(x)
         return x
-
+    
+    #easily keep track of the layer's paramters
     @property
     def weights(self):
        weights = []
@@ -1102,6 +1393,8 @@ class NaiveSequential:
 
 
 ```python
+#Now we can create a mockup of a Keras model
+
 model = NaiveSequential([
     NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
     NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
@@ -1110,6 +1403,8 @@ assert len(model.weights) == 4
 ```
 
 #### A batch generator
+
+For iterating over the MNIST data, we create a batch generator
 
 
 ```python
@@ -1131,17 +1426,34 @@ class BatchGenerator:
         return images, labels
 ```
 
-### Running one training step
+## Running one training step
+
+Here, we'll update the weights of the model after running it on one batch of data. We need to:
+
+- Compute the predictions of the model for the images in the batch.
+- Compute the loss value for these predictions, given the actual labels.
+- Compute the gradient of the loss with regard to the model’s weights.
+- Move the weights by a small amount in the direction opposite to the gradient.
+
+We will use the TensorFlow GradientTape object
 
 
 ```python
 def one_training_step(model, images_batch, labels_batch):
+    #Run the "forward pass"
+    #(Computer the model's predictions under a GradientTape scope)
     with tf.GradientTape() as tape:
         predictions = model(images_batch)
         per_sample_losses = tf.keras.losses.sparse_categorical_crossentropy(
             labels_batch, predictions)
         average_loss = tf.reduce_mean(per_sample_losses)
+        
+    #Compute the gradient of the loss with regard to the weights
+    #The output gradients is a list where each entry corresponds to a
+    #weight from the model.weights list
     gradients = tape.gradient(average_loss, model.weights)
+    
+    #Update the weights using the gradients using the next function 
     update_weights(gradients, model.weights)
     return average_loss
 ```
@@ -1150,6 +1462,9 @@ def one_training_step(model, images_batch, labels_batch):
 ```python
 learning_rate = 1e-3
 
+#The simplest way to update the weights is to subtract
+#gradient * learning_rate from each weight
+
 def update_weights(gradients, weights):
     for g, w in zip(gradients, weights):
         w.assign_sub(g * learning_rate)
@@ -1157,6 +1472,9 @@ def update_weights(gradients, weights):
 
 
 ```python
+#But this is never done by hand
+#Instead, we use an optimzer instance
+
 from tensorflow.keras import optimizers
 
 optimizer = optimizers.SGD(learning_rate=1e-3)
@@ -1190,69 +1508,70 @@ train_images = train_images.astype("float32") / 255
 test_images = test_images.reshape((10000, 28 * 28))
 test_images = test_images.astype("float32") / 255
 
+#use our training class made from scratch!
 fit(model, train_images, train_labels, epochs=10, batch_size=128)
 ```
 
     Epoch 0
-    loss at batch 0: 9.22
-    loss at batch 100: 2.22
-    loss at batch 200: 2.21
-    loss at batch 300: 2.08
-    loss at batch 400: 2.25
+    loss at batch 0: 5.94
+    loss at batch 100: 2.25
+    loss at batch 200: 2.22
+    loss at batch 300: 2.11
+    loss at batch 400: 2.23
     Epoch 1
-    loss at batch 0: 1.93
-    loss at batch 100: 1.87
-    loss at batch 200: 1.83
-    loss at batch 300: 1.71
-    loss at batch 400: 1.86
+    loss at batch 0: 1.94
+    loss at batch 100: 1.89
+    loss at batch 200: 1.84
+    loss at batch 300: 1.73
+    loss at batch 400: 1.84
     Epoch 2
-    loss at batch 0: 1.61
-    loss at batch 100: 1.57
-    loss at batch 200: 1.51
-    loss at batch 300: 1.43
-    loss at batch 400: 1.53
+    loss at batch 0: 1.62
+    loss at batch 100: 1.58
+    loss at batch 200: 1.52
+    loss at batch 300: 1.44
+    loss at batch 400: 1.52
     Epoch 3
-    loss at batch 0: 1.35
+    loss at batch 0: 1.36
     loss at batch 100: 1.34
-    loss at batch 200: 1.24
-    loss at batch 300: 1.22
-    loss at batch 400: 1.30
+    loss at batch 200: 1.25
+    loss at batch 300: 1.23
+    loss at batch 400: 1.28
     Epoch 4
-    loss at batch 0: 1.15
+    loss at batch 0: 1.16
     loss at batch 100: 1.15
-    loss at batch 200: 1.04
-    loss at batch 300: 1.05
-    loss at batch 400: 1.13
+    loss at batch 200: 1.05
+    loss at batch 300: 1.06
+    loss at batch 400: 1.11
     Epoch 5
-    loss at batch 0: 1.00
+    loss at batch 0: 1.02
     loss at batch 100: 1.01
-    loss at batch 200: 0.90
-    loss at batch 300: 0.93
-    loss at batch 400: 1.01
+    loss at batch 200: 0.91
+    loss at batch 300: 0.94
+    loss at batch 400: 0.99
     Epoch 6
-    loss at batch 0: 0.89
-    loss at batch 100: 0.91
+    loss at batch 0: 0.90
+    loss at batch 100: 0.90
     loss at batch 200: 0.80
-    loss at batch 300: 0.84
-    loss at batch 400: 0.92
+    loss at batch 300: 0.85
+    loss at batch 400: 0.90
     Epoch 7
-    loss at batch 0: 0.81
+    loss at batch 0: 0.82
     loss at batch 100: 0.82
     loss at batch 200: 0.72
-    loss at batch 300: 0.77
-    loss at batch 400: 0.85
+    loss at batch 300: 0.78
+    loss at batch 400: 0.83
     Epoch 8
-    loss at batch 0: 0.74
+    loss at batch 0: 0.76
     loss at batch 100: 0.75
     loss at batch 200: 0.66
     loss at batch 300: 0.72
-    loss at batch 400: 0.80
+    loss at batch 400: 0.78
     Epoch 9
-    loss at batch 0: 0.69
+    loss at batch 0: 0.70
     loss at batch 100: 0.70
     loss at batch 200: 0.61
     loss at batch 300: 0.67
-    loss at batch 400: 0.75
+    loss at batch 400: 0.74
     
 
 ### Evaluating the model
@@ -1270,3 +1589,19 @@ print(f"accuracy: {matches.mean():.2f}")
     
 
 ## Summary
+
+- Tensors form the foundation of modern machine learning systems. They come in various flavors of dtype, rank, and shape.
+
+- You can manipulate numerical tensors via tensor operations (such as addition, tensor product, or element-wise multiplication), which can be interpreted as encoding geometric transformations. In general, everything in deep learning is amenable to a geometric interpretation.
+
+- Deep learning models consist of chains of simple tensor operations, parameterized by weights, which are themselves tensors. The weights of a model are where its “knowledge” is stored.
+
+- Learning means finding a set of values for the model’s weights that minimizes a loss function for a given set of training data samples and their corresponding targets.
+
+- Learning happens by drawing random batches of data samples and their targets, and computing the gradient of the model parameters with respect to the loss on the batch. The model parameters are then moved a bit (the magnitude of the move is defined by the learning rate) in the opposite direction from the gradient. This is called mini-batch stochastic gradient descent.
+
+- The entire learning process is made possible by the fact that all tensor operations in neural networks are differentiable, and thus it’s possible to apply the chain rule of derivation to find the gradient function mapping the current parameters and current batch of data to a gradient value. This is called backpropagation.
+
+- Two key concepts you’ll see frequently in future parts are loss and optimizers. These are the two things you need to define before you begin feeding data into a model.
+    1. The **loss** is the quantity you’ll attempt to minimize during training, so it should represent a measure of success for the task you’re trying to solve.
+    2. The **optimizer** specifies the exact way in which the gradient of the loss will be used to update parameters: for instance, it could be the RMSProp optimizer, SGD with momentum, and so on.
