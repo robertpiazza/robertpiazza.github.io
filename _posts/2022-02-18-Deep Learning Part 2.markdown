@@ -1,17 +1,24 @@
-```python
-# conda create --name deep-learning
-# conda activate deep-learning
-# pip install tensorflow==2.6 keras==2.6
-```
-
-This is a companion notebook for the book [Deep Learning with Python, Second Edition](https://www.manning.com/books/deep-learning-with-python-second-edition?a_aid=keras&a_bid=76564dff). The original notebook only contained runnable code blocks and section titles, and omits everything else. I, Robert Piazza, have added my own notes and comments to the book for greater learning and reference capabilities. 
-
+---
+layout: post
+title:  "Deep Learning Part 2"
+date:   2022-02-18
+categories: data_science
+---
 # The mathematical building blocks of neural networks
 
 > This chapter covers
 > - A first example of a neural network
 > - Tensors and tensor operations
 > - How neural networks learn via backpropagation and gradient descent
+
+
+This is Part 2 of a companion notebook for the book [Deep Learning with Python, Second Edition](https://www.manning.com/books/deep-learning-with-python-second-edition?a_aid=keras&a_bid=76564dff). The original notebook only contained runnable code blocks and section titles, and omits everything else. I, Robert Piazza, have added my own notes and comments to the book for greater learning and reference capabilities. 
+
+```python
+# conda create --name deep-learning
+# conda activate deep-learning
+# pip install tensorflow==2.6 keras==2.6
+```
 
 
 - MNIST dataset (Modified National Institute of Standards and Technology) is the "Hello World" of neural networks and machine learning.
@@ -56,7 +63,7 @@ train_images.shape
 
 
 
-There are **60,000*** training examples, each 28 by 28 pixesl
+There are **60,000** training examples, each 28 by 28 pixels
 
 
 ```python
@@ -287,7 +294,7 @@ plt.show()
 
 
     
-![png](output_30_0.png)
+<img src="/assets/images/DLwPCh2/output_30_0.png">
     
 
 
@@ -322,7 +329,7 @@ plt.show()
 
 
     
-![png](output_32_0.png)
+<img src="/assets/images/DLwPCh2/output_32_0.png">
     
 
 
@@ -609,7 +616,7 @@ plt.show()
 
 
     
-![png](output_56_0.png)
+<img src="/assets/images/DLwPCh2/output_56_0.png">
     
 
 
