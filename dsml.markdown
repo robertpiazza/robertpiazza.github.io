@@ -5,7 +5,7 @@ date:   2021-08-24 11:47:00 -0700
 categories: data_science machine_learning
 permalink: /dsml/
 ---
-Repository containing data science projects completed by me for academic, self learning, and hobby purposes. Presented in the form of iPython Notebooks, and R markdown files (published at RPubs).
+Repository containing data science projects completed by me for academic, self learning, and hobby purposes. 
 
 
 
@@ -14,17 +14,20 @@ _Note: Data used in the projects (accessed under Datasets) is for demonstration 
 ## Contents
 
 - ### Computer Vision
-	- [Applying Computer Vision to Solving a Jigsaw Puzzle]({% post_url 2019-08-21-Puzzle Companion %}): Using various computer vision methods and the OpenCV library to match puzzle pieces with a canvas.
+	- [Cheating on a Jigsaw Puzzle]({% post_url 2019-08-21-Puzzle Companion %}): Using various computer vision methods and the OpenCV library to match puzzle pieces with a canvas.
+
+	*Tools: OpenCV, Pandas, Matplotlib*
 
 - ### Machine Learning
 
+	- [Using ML to Predict Video Game Player Strength]({% post_url 2021-02-08-Team Gaming Rankings%})
 	- [Preprocessing Pipelines: Cleaning a diabetes dataset](https://github.com/robertpiazza/ProfDev/blob/master/Jupyter%20Notebooks/Preprocessing_Pipelines.ipynb)
 	- [Regression: Predicting life expectancy based on demographic data](https://github.com/robertpiazza/ProfDev/blob/master/Jupyter%20Notebooks/Regression%20with%20Scikit-Learn.ipynb)
 	- [Classification: Predicting congress party based on voting record](https://github.com/robertpiazza/ProfDev/blob/master/Jupyter%20Notebooks/Classification%20with%20Scikit-learn.ipynb)
 	- [Fine Tuning a Model: Improving model quality for predicting diabetes](https://github.com/robertpiazza/ProfDev/blob/master/Jupyter%20Notebooks/Fine%20Tuning%20a%20Model.ipynb)
 
 
-	*Tools: scikit-learn, Pandas, Seaborn, Matplotlib*
+	*Tools: Tableau, scikit-learn, Pandas, Seaborn, Matplotlib*
 
 
 - ### Data Analysis and Visualisation
