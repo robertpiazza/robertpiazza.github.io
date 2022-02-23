@@ -12,7 +12,10 @@ categories: data_science
 > - How neural networks learn via backpropagation and gradient descent
 
 
-This is Part 2 of a companion notebook for the book [Deep Learning with Python, Second Edition](https://www.manning.com/books/deep-learning-with-python-second-edition?a_aid=keras&a_bid=76564dff). The original notebook only contained runnable code blocks and section titles, and omits everything else. I, Robert Piazza, have added my own notes and comments to the book for greater learning and reference capabilities. 
+This will be the second part of a series of posts for my own reference and continued professional development in deep learning. It should mostly follow important points taken from François Chollet's book Deep Learning with Python, Second Edition. 
+
+The main book itself can be found at [Manning.com](https://livebook.manning.com/book/deep-learning-with-python-second-edition/chapter-1/)
+
 
 ```python
 # conda create --name deep-learning
@@ -1117,7 +1120,7 @@ But step four is the complicated part, we want to update all the parameters all 
 
 - Given a continuous function, the slope of the function at any point is the derivative. It gives the rate of change of the function at any point. For a line, this is a trivial constant because it's rate of change is constant. For the $x^2$ function, the function of its function is $2x$
 
-- Even if the derivative isn't linear, we can always perform a first-order appoximation of the derivative at any point in x with a linear approximation of the derivative. This is useful for telling us the direction of the function x and magnitude. 
+- Even if the derivative isn't linear, we can always perform a first-order approximation of the derivative at any point in x with a linear approximation of the derivative. This is useful for telling us the direction of the function x and magnitude. 
 
 - So if we have an optimization function and we're looking for the value of x to minimize the loss, we just need to adjust x in the opposite direction of the current derivative. If the slope is negative, move it in the positive direction, and the amount of movement is proportional to the magnitude of the derivative. 
 
