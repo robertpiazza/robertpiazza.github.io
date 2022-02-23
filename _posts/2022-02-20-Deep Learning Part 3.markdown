@@ -1,8 +1,8 @@
 ---
 layout: post
-title: TITLE
-date: YYYY-MM-DD HH:MM:SS -0700
-categories:
+title: Deep Learning Part 3
+date: 2022-02-22
+categories: data_science
 ---
 
 # Introduction to Keras and TensorFlow
