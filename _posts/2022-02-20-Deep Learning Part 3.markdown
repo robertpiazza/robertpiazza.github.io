@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Deep Learning Part 3
-date: 2022-02-22
+date: 2022-02-20
 categories: data_science
 ---
 

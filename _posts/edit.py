@@ -4,7 +4,7 @@ import sys, re
 
 def edit(folder_name):
 # 	path = "D:/GitHub/robertpiazza.github.io/_posts/" + str(sys.argv[1])
-    path = "D:/GitHub/robertpiazza.github.io/_posts/Deep Learning Part 3.md"
+    path = "D:/GitHub/robertpiazza.github.io/_posts/Deep Learning Part 4.md"
     yaml = "---\nlayout: post\ntitle: TITLE\ndate: YYYY-MM-DD HH:MM:SS -0700\ncategories:\n---\n\n"
     with open(path, 'r') as file:
         filedata = file.read()
@@ -16,5 +16,5 @@ def edit(folder_name):
 
 if __name__ == '__main__':
     # folder_name = input("String with this post's folder name?")
-    folder_name = "DLwPCh3"
+    folder_name = "DLwPCh4"
     edit(folder_name)
