@@ -1081,9 +1081,11 @@ $\begin{bmatrix}
 
 Since this is the most generic, it follows the format of $y = W • x + b$ 
 
+
+#### Why are activation functions necessary?
 A Dense layer without an activation function is an affine layer!
 
-Without activatation functions, each layer of a dense layer could be combined into a single affine transform. By adding the activation functions, we get much more non-linear transformations and expand the possibilities of data representation with much more potential. 
+Without activation functions, each layer of a dense layer could be combined into a single affine transform. By adding the activation functions, we get much more non-linear transformations and expand the possibilities of data representation with much more potential. 
 
 <img src="/assets/images/DLwPCh2/Affine-ReLu.png">
 
