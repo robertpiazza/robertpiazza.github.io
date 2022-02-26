@@ -17,13 +17,15 @@ Book was made with tensorflow 2.6
 
 
 ```python
+#Running a custom runtime with anaconda
+
 #(base) conda install nb_conda_kernels
-# conda create --name deep-learning-book
+# conda create --name deep-learning
 # conda activate deep-learning-book
 # conda install ipykernel
-# conda install tensorflow==2.6
+# conda install tensorflow==2.6 keras==2.6
 
-#Here in Jupyter, menu>Kernel>Change kernel>conda env:deep-learning-book
+#Here in Jupyter, menu>Kernel>Change kernel>conda env:deep-learning
 
 ```
 

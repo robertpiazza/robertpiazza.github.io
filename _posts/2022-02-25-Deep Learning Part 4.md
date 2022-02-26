@@ -19,9 +19,15 @@ The main book itself can be found at [Manning.com](https://livebook.manning.com/
 
 
 ```python
+#Running a custom runtime with anaconda
+
+#(base) conda install nb_conda_kernels
 # conda create --name deep-learning
-# conda activate deep-learning
-# pip install tensorflow==2.6 keras==2.6
+# conda activate deep-learning-book
+# conda install ipykernel
+# conda install tensorflow==2.6 keras==2.6
+
+#Here in Jupyter, menu>Kernel>Change kernel>conda env:deep-learning
 ```
 
 In this part, we'll be conducting three common use cases of neural networks:

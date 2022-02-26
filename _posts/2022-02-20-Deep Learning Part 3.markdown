@@ -16,9 +16,15 @@ This is Part 3 of a companion notebook for  [Deep Learning with Python, Second E
 
 
 ```python
+#Running a custom runtime with anaconda
+
+#(base) conda install nb_conda_kernels
 # conda create --name deep-learning
-# conda activate deep-learning
-# pip install tensorflow==2.6 keras==2.6
+# conda activate deep-learning-book
+# conda install ipykernel
+# conda install tensorflow==2.6 keras==2.6
+
+#Here in Jupyter, menu>Kernel>Change kernel>conda env:deep-learning
 ```
 
 ## What's TensorFlow?
