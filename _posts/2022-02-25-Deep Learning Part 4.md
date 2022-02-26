@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Deep Learning Part 4
+title: Deep Learning Part 4 - Classification and Regression
 date: 2022-02-25
 categories: data_science
 ---
@@ -71,21 +71,11 @@ len(train_data[0])
 
 
 
-
-    218
-
-
-
-
 ```python
 train_labels[0]
 ```
 
-
-
-
     1
-
 
 
 
@@ -1324,7 +1314,7 @@ plt.show()
 
 
     
-<img src="/assets/images/DLwPCh4/output_121_0.png">
+<img src="/assets/images/DLwPCh4/output_109_0.png">
     
 
 
@@ -1343,7 +1333,7 @@ plt.show()
 
 
     
-<img src="/assets/images/DLwPCh4/output_123_0.png">
+<img src="/assets/images/DLwPCh4/output_111_0.png">
     
 
 

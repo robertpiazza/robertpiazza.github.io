@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Deep Learning Part 3
+title: Deep Learning Part 3 - Keras & Tensorflow
 date: 2022-02-20
 categories: data_science
 ---

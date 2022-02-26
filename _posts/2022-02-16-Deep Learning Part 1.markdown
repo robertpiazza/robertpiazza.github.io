@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deep Learning Part 1"
+title:  "Deep Learning Part 1 - What's Deep Learning?"
 date:   2022-02-16
 categories: deep_learning
 ---

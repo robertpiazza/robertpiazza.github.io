@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deep Learning Part 2"
+title:  "Deep Learning Part 2 Neural Net Math"
 date:   2022-02-18
 categories: data_science
 ---
