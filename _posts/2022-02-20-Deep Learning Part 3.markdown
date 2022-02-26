@@ -20,7 +20,7 @@ This is Part 3 of a companion notebook for  [Deep Learning with Python, Second E
 
 #(base) conda install nb_conda_kernels
 # conda create --name deep-learning
-# conda activate deep-learning-book
+# conda activate deep-learning
 # conda install ipykernel
 # conda install tensorflow==2.6 keras==2.6
 

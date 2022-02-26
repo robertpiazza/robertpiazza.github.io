@@ -21,7 +21,7 @@ Book was made with tensorflow 2.6
 
 #(base) conda install nb_conda_kernels
 # conda create --name deep-learning
-# conda activate deep-learning-book
+# conda activate deep-learning
 # conda install ipykernel
 # conda install tensorflow==2.6 keras==2.6
 
