@@ -27,3 +27,37 @@ $xl-screen: 80rem;
 
   --code-bg:       var(--oc-gray-1);
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-color:       var(--oc-gray-4);
+    --body-color-light: var(--oc-gray-6);
+    --body-bg:          var(--oc-gray-9);
+    --link-color:       var(--oc-blue-4);
+    --heading-color:    var(--oc-white);
+
+    --message-color: var(--oc-gray-9);
+    --message-bg:    var(--oc-yellow-4);
+
+    --border-color:  var(--oc-gray-7);
+
+    --code-bg:       var(--oc-gray-8);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --body-color:       var(--oc-white);
+    --body-color-light: var(--oc-white);
+    --body-bg:          var(--oc-white);
+    --link-color:       var(--oc-blue-4);
+    --heading-color:    var(--oc-black);
+
+    --message-color: var(--oc-white);
+    --message-bg:    var(--oc-yellow-4);
+
+    --border-color:  var(--oc-gray-7);
+
+    --code-bg:       var(--oc-gray-8);
+  }
+}
