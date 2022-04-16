@@ -6,6 +6,9 @@ categories: data_science
 ---
 
 # Glossary of Machine Learning terms
+
+Some basic terms and their meanings. 
+
 -   _Sample_ or _input_—One data point that goes into your model.
     
 -   _Prediction_ or _output_—What comes out of your model.

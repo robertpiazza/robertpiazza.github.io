@@ -24,13 +24,15 @@ description: >- # this means to ignore newlines until "baseurl:"
   Slices of RP's life
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "robertpiazza.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: ConvolutedLearn
+twitter_username: PiazzaRobert
 github_username:  robertpiazza
 
 # Build settings
 remote_theme: zivong/jekyll-theme-hydure
 plugins:
   - jekyll-remote-theme
+
+google_analytics: G-KWW8TRJENR
 
 # Exclude from processing.
 # The following items will not be processed, by default.
