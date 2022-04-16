@@ -5,7 +5,7 @@ date: 2022-02-26
 categories: data_science
 ---
 
-# Glossary of Machine Learning terms
+# Glossary of Machine Learning terms for Reference
 
 Some basic terms and their meanings. 
 
