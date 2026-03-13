@@ -1,8 +1,10 @@
-# 5³ Chess (Raumschach) — Technical Specification
+# 5³ Chess (Raumschach) Technical Blog
 
 ## Overview
 
 5³ Chess is a browser-based 3-D chess game played on a 5×5×5 board (Raumschach variant). It runs entirely client-side using Three.js for 3-D rendering and Firebase Realtime Database for optional two-player online play. No server-side compute is required beyond static file hosting.
+
+**[Play now](https://robertpiazza.com/5-3-Chess/)**
 
 ---
 
@@ -40,8 +42,6 @@ Both views share the same coordinate system and move validation logic.
 
 ## Piece Types
 
-Raumschach adds two pieces not found in standard chess:
-
 | Piece | Symbol | Movement |
 |---|---|---|
 | Rook | R | Slides any distance along one axis — X, Y, or Z (6 directions) |
@@ -54,13 +54,15 @@ Raumschach adds two pieces not found in standard chess:
 
 ---
 
+Raumschach adds the unicorn piece not found in standard chess.
+
 ## 3-D Piece Models
 
 Pieces are loaded as GLB models from the `/web/models/` directory. Each piece type has a corresponding `.glb` file (`king.glb`, `queen.glb`, etc.).
 
 ### Proportional Height System
 
-Piece heights are based on real-world standard chess piece proportions, anchored so that the King reaches `TARGET_HEIGHT = 1.50` world units (doubled from the initial 0.75 to make pieces more visible and prominent).
+Piece heights are based on real-world standard chess piece proportions, anchored so that the King reaches `TARGET_HEIGHT = 1.50` world units.
 
 | Piece | Real-world height (cm) | In-game height (world units) |
 |---|---|---|
@@ -100,7 +102,7 @@ The AI uses **minimax search with alpha-beta pruning**.
 ### Algorithm
 
 ```
-findBestMove(board, aiColor, depth = 2)
+findBestMove(board, aiColor, depth = 3)
   → iterates all legal moves for aiColor
   → applies each move to a cloned board
   → calls minimax(depth - 1, opponentTurn, α, β)
