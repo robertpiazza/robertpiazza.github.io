@@ -132,6 +132,167 @@ Pawn promotion to Queen is simulated inside the search tree.
 
 ---
 
+## Threat Preview Rings
+
+When a player selects a piece, every legal-move indicator shows a color-coded ring encoding the expected material outcome of moving to that square. The calculation is a **Static Exchange Evaluation (SEE)** — the same technique chess engines use to evaluate captures without doing a full tree search.
+
+### Flow
+
+`InputHandler._selectPiece()` calls `getSquareThreat` for every legal destination and assembles a `threatMap` before passing it to the board renderer:
+
+```js
+const threatMap = new Map();
+for (const move of moves) {
+  threatMap.set(
+    `${move.x},${move.y},${move.z}`,
+    getSquareThreat(gs.board, move, pos, gs.currentTurn)
+  );
+}
+this.board.showHighlights(pos, moves, threatMap);
+```
+
+`getSquareThreat` in `moveValidator.js` returns `{ greenScore, redScore }`:
+- `greenScore` — material the moving side expects to gain through the full recapture sequence
+- `redScore` — material the moving side expects to lose
+
+### SEE Algorithm
+
+The simulation plays out the complete exchange sequence on the target square, each side always recapturing with its cheapest available piece.
+
+**Two shadow boards**
+
+The function operates on two derived board states, not the live board:
+
+- `base` — the moving piece relocated to the target, source cleared. Used to determine which opponent pieces can now reach the target.
+- `defSim` — identical to `base`, but the piece at the target is replaced with a dummy of the *opponent's* color. This lets own sliding pieces "see through" to the target when computing defenders — without this, a rook behind the moving piece on the same rank would not appear to cover the target square.
+
+```js
+const base = boardArr.map(p => p.map(r => [...r]));
+base[tx][ty][tz] = base[selectedPos.x][selectedPos.y][selectedPos.z];
+base[selectedPos.x][selectedPos.y][selectedPos.z] = null;
+
+const defSim = base.map(p => p.map(r => [...r]));
+defSim[tx][ty][tz] = { ...base[tx][ty][tz], color: opponentColor };
+```
+
+**Collecting participants**
+
+Every non-target piece is tested via `pseudoLegalMoves()` to determine whether it can reach `(tx, ty, tz)`:
+
+- Opponent pieces → `attackerVals[]` (the pieces that can recapture the mover)
+- Own pieces → `defenderVals[]` (own pieces that can recapture after the opponent takes)
+
+Both arrays are sorted cheapest-first so each side always uses its least-valuable recapturer.
+
+**King handling**
+
+Kings are tracked separately in `attackerKing` / `defenderKing` boolean flags rather than being inserted into the sorted arrays. A king may only participate as the **very last** recapturer — moving a king onto a square still covered by an enemy piece would be walking into check, which is illegal. The simulation enforces this before allowing king participation:
+
+```js
+} else if (attackerKing) {
+  // King may only capture once the defender side is completely exhausted.
+  if (di < defenderVals.length || defenderKing) break;
+  redScore += onSquareValue;
+  onSquareValue = PIECE_VALUES[PIECE.KING];
+  attackerKing = false;
+}
+```
+
+**Simulation loop**
+
+```
+onSquareValue = value of the moving piece (what the opponent could gain by recapturing)
+greenScore   += initial capture gain (if landing on an opponent piece)
+
+loop:
+  attacker's turn → redScore   += onSquareValue; onSquareValue = cheapest attacker value
+  defender's turn → greenScore += onSquareValue; onSquareValue = cheapest defender value
+  … until one side runs out of pieces (or king legality check halts early)
+```
+
+**Example** — White bishop moves to a square defended by a Black knight (350) and Black queen (1000), with a White pawn (100) behind that can recapture:
+
+| Step | Event | greenScore | redScore |
+|------|-------|-----------|---------|
+| initial move | White bishop captures (empty) | 0 | 0 |
+| attacker 1 | Black knight captures bishop | 0 | 350 |
+| defender 1 | White pawn captures knight | 350 | 350 |
+| attacker 2 | Black queen captures pawn | 350 | 450 |
+| defender — none | White has no more pieces | stop | |
+
+Result: `greenScore = 350, redScore = 450` → ring is ~44% green, ~56% red.
+
+### Ring Rendering
+
+**Layers view — split arc**
+
+`THREE.RingGeometry` supports partial arcs via `thetaStart` and `thetaLength`. The green and red arcs are sized proportionally:
+
+```js
+const greenFrac  = threat.greenScore / total;
+const greenAngle = greenFrac * Math.PI * 2;
+
+// Green arc, starting at 0
+new THREE.RingGeometry(0.28, 0.44, 24, 1, 0, greenAngle)
+
+// Red arc, continuing from where green ends
+new THREE.RingGeometry(0.28, 0.44, 24, 1, greenAngle, Math.PI * 2 - greenAngle)
+```
+
+When `redScore === 0` (no recapture threat), a single solid green ring is rendered — no split needed.
+
+**Cube view — interpolated edge box**
+
+Cube view uses `LineSegments` edge boxes instead of rings. A single box is rendered per destination, its color linearly interpolated between green and red:
+
+```js
+const redFrac = total === 0 ? 0 : threat.redScore / total;
+const color = new THREE.Color().copy(COLOR_HIGHLIGHT).lerp(COLOR_THREAT, redFrac);
+```
+
+The cube view can't split a single geometry proportionally without significantly more vertex manipulation, so the continuous lerp is an intentional design tradeoff that preserves performance and simplicity.
+
+---
+
+## Captured Pieces Bar
+
+A persistent bar at the bottom-left shows which pieces each player has captured, displayed as Unicode chess symbols sorted by material value.
+
+### State Tracking
+
+`GameState` stores captures as two growing arrays of piece-type strings:
+
+```js
+this.captured = { w: [], b: [] };
+// captured.w = piece types captured BY White (i.e. Black pieces White removed)
+// captured.b = piece types captured BY Black (i.e. White pieces Black removed)
+```
+
+When a move lands on an occupied square, `executeMove()` records the victim before overwriting the destination:
+
+```js
+const victim = this.get(dst.x, dst.y, dst.z);
+if (victim) this.captured[piece.color].push(victim.type);
+```
+
+The entire `captured` state is deep-copied into every undo snapshot and fully restored on undo, keeping the display consistent with board history.
+
+### Display
+
+`UI._updateCaptures(gs)` runs on every call to `ui.update()` (i.e., after every move):
+
+```js
+const SYM_WHITE = { P: '♙', R: '♖', N: '♘', B: '♗', Q: '♕', K: '♔', U: '🦄' };
+const SYM_BLACK = { P: '♟', R: '♜', N: '♞', B: '♝', Q: '♛', K: '♚', U: '🦄' };
+const ORDER = { Q: 0, R: 1, U: 2, B: 3, N: 4, P: 5, K: 6 };
+```
+
+White's row shows the Black symbols for each piece White captured (the physical pieces removed from Black's side of the board). Sorting follows material value descending — Queen first, Pawns last — giving both players a quick advantage read without requiring mental arithmetic.
+
+Each row is hidden with `classList.toggle('hidden', length === 0)` until at least one capture has been made, keeping the initial HUD uncluttered.
+
+---
+
 ## Hint System
 
 A hint button (💡) is displayed in the bottom-right corner of the screen. It is enabled during the human player's turn in both Local Play and vs AI modes.
@@ -219,6 +380,16 @@ The start screen presented before a game begins. Panels:
 
 ### Game-Over Overlay
 Displayed on checkmate or stalemate. Shows result text and a **Play Again** button that returns to the lobby.
+
+### Last-Move Indicator
+
+After every move, the source and destination squares are highlighted with an amber overlay. This makes it easy to see what the opponent just played without a move log.
+
+**Layers view** — a translucent amber `PlaneGeometry` (94% of square size, opacity 0.40) is placed 0.005 units above the board surface, below the piece mesh.
+
+**Cube view** — a `LineSegments` edge box slightly larger than the cell (`1.08×` scale) is drawn around both cells.
+
+Both indicators are stored in `board.lastMoveMeshes`. When the view mode toggles, `setViewMode()` rebuilds them in the new style from the stored `_lastMoveSrc` / `_lastMoveDst` coordinates, so the indicator persists across view switches.
 
 ### Undo Request Overlay
 A bottom-center toast shown to the opponent when an undo is requested in network play. Contains the request message and Accept / Decline buttons.
