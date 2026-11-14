@@ -9,6 +9,8 @@ I (Robert Piazza) live in Seattle with my wife and two children. I'm a lifelong 
 This blog is my repository to record when I learn about something new and want to share it out. 
 
 Topics will include:
+- Self-references I thought would be good to preserve
+- Applications I've built
 - Data Science/Machine Learning/Deep Learning
 
 **Stay Updated**: You can sign up to receive text message updates when I publish new content by clicking the "Text Updates" link in the sidebar.
