@@ -87,7 +87,24 @@ A tactic can also arrive a move late. If the engine's line has a check that driv
 
 **Comparison with the engine's choice.** If your move isn't the engine's top pick, the card says what the preferred move does that yours doesn't, or shows the line where the difference appears. For a move that loses ground it names the opponent's expected reply and what it wins: "Allows Nxg5: wins the queen on g5 for free." A move that develops a piece while making a threat is flagged as gaining a tempo.
 
-Arrows show the same content on the board: teal for the move, purple for the tactic, dashed red for the opponent's answer. With nothing selected, the card reviews the last move by each side, and red arrows show what the opponent's last move threatens.
+### Arrows
+
+The same content is drawn on the board as arrows. Color says what kind of information the arrow carries, and solid versus dashed says whether it is something that happens now or something that follows.
+
+| Arrow | Meaning |
+|---|---|
+| Teal, solid | The move you are looking at: the selected piece going to the square you are hovering or have clicked in the move list. |
+| Purple, solid | A tactic the move creates now: the lines of a fork, pin, skewer, discovered attack or check, a capture that wins material, a threat on a piece. |
+| Purple, dashed | A tactic that arrives a move later, in the engine's line after the opponent's best reply. |
+| Red, solid | Something that goes wrong. A piece the move leaves hanging, a tactic that is available but doesn't pay off (it matches the red badge), or the opponent's expected reply when your move is a real error. |
+| Red, dashed | What the opponent's reply then attacks. |
+| Dark grey, solid | A neutral note: a trade, a plain check, a sacrifice the engine still likes, or a positional idea such as a battery or pawn break. |
+| Blue, faded | A book move from the openings library, up to five at a time. In practice mode only the next line move is shown. |
+| Light grey, faded | The last move played. Once the move has a rating, the arrow takes that rating's color, so a blunder shows in red and a best move in green. |
+| Rating color, solid | Under the mistake preventer, the one legal move that avoids a mistake or blunder. |
+
+With nothing selected, red arrows show what the opponent's last move threatens. Arrows are drawn under the score pills, stars and badges, so they never cover a rating.
+
 
 <p><a href="/assets/images/chess-visuals/mate-arc.png"><img src="/assets/images/chess-visuals/mate-arc-thumb.png" alt="Queen selected on h5 with Qxf7 rated as mate in 1" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><a href="/assets/images/chess-visuals/why-card.png"><img src="/assets/images/chess-visuals/why-card-thumb.png" alt="Why this move card for Qxf7 checkmate" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><br><em>A position with mate on the board. The queen's other moves are all red, Qxf7# gets the star and a #1 label, and the card explains the move.</em></p>
 
