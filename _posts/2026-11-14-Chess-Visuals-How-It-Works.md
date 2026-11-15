@@ -11,6 +11,8 @@ Chess Visuals is a chess trainer that runs entirely in the browser. On your turn
 
 There is no server and no build step. It is static files on GitHub Pages: about 3,700 lines of JavaScript, a chess rules library, Stockfish compiled to WebAssembly, and 66 tests.
 
+<p><a href="/assets/images/chess-visuals/rings.png"><img src="/assets/images/chess-visuals/rings-thumb.png" alt="Chess board with a colored ring around each White piece" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><a href="/assets/images/chess-visuals/selected-piece.png"><img src="/assets/images/chess-visuals/selected-piece-thumb.png" alt="Knight selected, with rated discs on its target squares" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><br><em>Left: the rings on White's pieces in an Italian-style middlegame. Right: the c3 knight selected, with each target square rated. Click either to enlarge.</em></p>
+
 ---
 
 ## What you see on the board
@@ -86,6 +88,8 @@ A tactic can also arrive a move late. If the engine's line has a check that driv
 **Comparison with the engine's choice.** If your move isn't the engine's top pick, the card says what the preferred move does that yours doesn't, or shows the line where the difference appears. For a move that loses ground it names the opponent's expected reply and what it wins: "Allows Nxg5: wins the queen on g5 for free." A move that develops a piece while making a threat is flagged as gaining a tempo.
 
 Arrows show the same content on the board: teal for the move, purple for the tactic, dashed red for the opponent's answer. With nothing selected, the card reviews the last move by each side, and red arrows show what the opponent's last move threatens.
+
+<p><a href="/assets/images/chess-visuals/mate-arc.png"><img src="/assets/images/chess-visuals/mate-arc-thumb.png" alt="Queen selected on h5 with Qxf7 rated as mate in 1" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><a href="/assets/images/chess-visuals/why-card.png"><img src="/assets/images/chess-visuals/why-card-thumb.png" alt="Why this move card for Qxf7 checkmate" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><br><em>A position with mate on the board. The queen's other moves are all red, Qxf7# gets the star and a #1 label, and the card explains the move.</em></p>
 
 ---
 
