@@ -9,7 +9,9 @@ Chess Visuals is a chess trainer that runs entirely in the browser. On your turn
 
 **[Play it here](https://robertpiazza.com/chess-visuals/)**. The source is at [github.com/robertpiazza/chess-visuals](https://github.com/robertpiazza/chess-visuals).
 
-There is no server and no build step. It is static files on GitHub Pages: about 3,700 lines of JavaScript, a chess rules library, Stockfish compiled to WebAssembly, and 66 tests.
+There is no build step, and the only server is a small Firebase database used when you play a friend online. Everything else is static files on GitHub Pages: about 4,300 lines of JavaScript, a chess rules library, Stockfish compiled to WebAssembly, and 75 tests.
+
+*Updated November 21, 2026: added safety bars under the pieces, online games against a friend, and changes to the mistake preventer.*
 
 <p><a href="/assets/images/chess-visuals/rings.png"><img src="/assets/images/chess-visuals/rings-thumb.png" alt="Chess board with a colored ring around each White piece" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><a href="/assets/images/chess-visuals/selected-piece.png"><img src="/assets/images/chess-visuals/selected-piece-thumb.png" alt="Knight selected, with rated discs on its target squares" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><br><em>Left: the rings on White's pieces in an Italian-style middlegame. Right: the c3 knight selected, with each target square rated. Click either to enlarge.</em></p>
 
@@ -26,6 +28,23 @@ I wanted to read a position by shape before reading any notation. A knight ringe
 A side panel lists the same moves with SAN, class, score and win percentage. Hovering a row highlights the square, and clicking a row plays the move. Promotions bring up a picker with each choice rated.
 
 **Moves already played** are annotated with the rating they had when played (`?!`, `?`, `??`), for you and for the computer.
+
+**Safety bars.** Every piece except the kings, on both sides, has a short bar under it. The bar answers one question: if the opponent started capturing on this square and both sides kept trading while it paid off, who would come out ahead? It shows on either side's turn.
+
+| Bar | Meaning |
+|---|---|
+| Light blue | Protected, or attacked but the trades come out even or better. |
+| Dashed outline | Loose: nothing defends it. It isn't attacked yet. |
+| Red, with −n | A piece of the player at the bottom of the board that would lose n pawns' worth. |
+| Amber, with +n | A piece of the player at the top that the bottom player can win. |
+
+Red and amber are always from the point of view of whoever is at the bottom of the board, so flipping the board swaps them. The bars are deliberately quiet: a board where every bar is light blue is a board where nothing hangs, and the eye goes straight to the red and amber ones.
+
+While you drag a piece, or hover one of a selected piece's targets, the bars show the position after that move. That shows what a move does to the rest of the board: which of your pieces it leaves undefended, which it protects, and which enemy pieces it starts attacking. A checkbox in settings turns the bars off.
+
+<p><a href="/assets/images/chess-visuals/safety-bars.png"><img src="/assets/images/chess-visuals/safety-bars-thumb.png" alt="Board with a bar under each piece; the e5 knight's bar is red with -3, two black pieces have amber bars with +3" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><a href="/assets/images/chess-visuals/safety-drag.png"><img src="/assets/images/chess-visuals/safety-drag-thumb.png" alt="The same position while the e5 knight is dragged to f3; the c4 bishop's bar turns red" style="max-width:48%;height:auto;margin:0 1% 6px 0"></a><br><em>Left: the knight on e5 loses 3 (the d6 pawn and g4 knight attack it, and only the d4 pawn defends it), while the black knight on g4 and bishop on h3 can be won. Right: dragging the knight to f3. The bishop on c4 loses its only defender and turns red, and the knight now blocks the queen's line to g4, so that +3 goes away.</em></p>
+
+The calculation is a static exchange evaluation, in `safety.js` (about 60 lines). It plays out the captures on the square, each side always using its cheapest piece that can legally take, and works back from the end so either side can stop when going on would cost it. Because each capture is checked for legality, a pinned defender doesn't count, and pieces lined up behind each other (a rook behind a rook, a queen behind a bishop) join in as the pieces in front are traded off. It doesn't look at checks or threats elsewhere on the board, so it is a quick guide rather than a search.
 
 ---
 
@@ -100,7 +119,7 @@ The same content is drawn on the board as arrows. Color says what kind of inform
 | Red, dashed | What the opponent's reply then attacks. |
 | Dark grey, solid | A neutral note: a trade, a plain check, a sacrifice the engine still likes, or a positional idea such as a battery or pawn break. |
 | Blue, faded | A book move from the openings library, up to five at a time. In practice mode only the next line move is shown. |
-| Light grey, faded | The last move played. Once the move has a rating, the arrow takes that rating's color, so a blunder shows in red and a best move in green. |
+| Light grey, faded | The last move played. Once the move has a rating, the arrow takes that rating's color, so a blunder shows in red and a best move in green. It is hidden while a move is being previewed, so it doesn't compete with the preview arrows. |
 | Rating color, solid | Under the mistake preventer, the one legal move that avoids a mistake or blunder. |
 
 With nothing selected, red arrows show what the opponent's last move threatens. Arrows are drawn under the score pills, stars and badges, so they never cover a rating.
@@ -112,7 +131,7 @@ With nothing selected, red arrows show what the opponent's last move threatens. 
 
 ## Playing games
 
-**Opponent.** You can play White, Black, or "both sides," where the app rates moves for whoever is to move. The computer uses the same ratings you see. At strength 20 it always plays the top move. Below that it picks randomly from moves within an allowed win-percentage loss, weighted toward the better ones:
+**Opponent.** You can play White, Black, or "both sides," where the app rates moves for whoever is to move. A fourth option, "Play a friend online," is covered in its own section below. The computer uses the same ratings you see. At strength 20 it always plays the top move. Below that it picks randomly from moves within an allowed win-percentage loss, weighted toward the better ones:
 
 ```js
 const allowed = (20 - s) * 1.6;
@@ -133,6 +152,20 @@ Weaker settings also search less deeply. The opponent makes plausible mistakes r
 
 ---
 
+## Playing a friend online
+
+Choosing "Play a friend online" in the Game menu swaps the opening picker and New game button for the room setup, in the same box. You pick a side (White, Black or random) and whether ratings and explanations are allowed during the game, then press Create game. You get a six-character room code and a button that copies an invite link. Your friend opens the link, or picks the same option and types the code.
+
+<p><img src="/assets/images/chess-visuals/online-setup.png" alt="Game box with Play a friend online selected, showing the side picker, the ratings checkbox, Create game, and a code box with Join" style="max-width:320px;width:100%;height:auto"></p>
+
+If the host doesn't allow ratings, both players get a plain board while the game is live: no rings, target ratings, safety bars, arrows, explanations, opening card or evaluation bar, and the engine doesn't run. Everything comes back for both players when the game ends, so you can step through it together. If the host allows them, each player's own settings apply.
+
+You can still step back and try moves during the game. Those stay on your board as variations, and End returns to the live position. Only moves played at the live position are sent. Either player can resign. Reloading the page rejoins the same side, because the room code stays in the address bar and the tab remembers which side it holds. A third person who opens the link is turned away.
+
+Moves go through Firebase Realtime Database, in the same project as my 5³ Chess game. A room stores its settings, the moves keyed by ply, and the result. The database rules enforce the shape of the game: room settings can't change once created, only one guest can join, no move can be played before the guest joins or after a resignation, and each move can be written once and never overwritten. The Firebase library is only loaded when you create or join a game, so the rest of the site doesn't depend on it. There is no undo, clock or draw offer.
+
+---
+
 ## Openings
 
 `openings.js` holds about 70 named lines (Ruy Lopez, Italian, Najdorf and Dragon Sicilians, French, Caro-Kann, Queen's Gambit, King's Indian, Nimzo-Indian, London, English and others), each with an ECO code and a one-line idea. The Opening card names the current opening and lists the book moves from the position, with the openings each leads to. Book moves also appear as blue arrows.
@@ -145,6 +178,8 @@ Weaker settings also search less deeply. The opponent makes plausible mistakes r
 
 This is a setting that turns the display into a safety check. When it's on, rings, target ratings and hints show only moves rated Mistake or Blunder. You see where the traps are and can hover an orange or red target to read why before you play it. Opening guidance is hidden. If exactly one legal move avoids a Mistake or Blunder, an arrow in its rating color shows it and the status line names it.
 
+Selecting a piece doesn't preview anything on its own while the preventer is on. A mistake's arrows and explanation appear only while you hover its target square or its row in the move list, or after you click the row.
+
 It only filters what is displayed. The ratings and the opponent's strength don't change. It starts off on every page load: the saved-settings code deletes the stored value, so it can't carry over from an earlier session.
 
 ---
@@ -155,21 +190,24 @@ The files:
 
 ```
 web/js/
-  main.js        game flow, computer opponent, side panel (~980 lines)
+  main.js        game flow, computer opponent, online games, side panel (~1,250 lines)
   board.js       SVG board, rings, markers, drag and click input
   analysis.js    win%, classes, per-piece summaries
   tactics.js     fork, pin, skewer, discovery, trap, hanging detection
+  safety.js      static exchange count behind the safety bars
   principles.js  positional commentary
   explain.js     combines the above with the engine line; badges
   openings.js    opening library and lookup
   voice.js       typed and spoken phrases to legal moves
   tree.js        move tree with variations
+  network.js     online rooms and moves in Firebase
+  online.js      room codes and move-list helpers
   engine/        Stockfish wrapper, built-in search, 0x88 move generator
 ```
 
 The board is drawn as SVG, with the cburnett piece set. Move legality, SAN and game state come from chess.js 1.4.0. The tactic code works on its own 64-square arrays, parsed from FEN, so it can apply a move and inspect the result without going through the game object. The engine's built-in search uses a separate 0x88 representation because it needs speed.
 
-There are 66 tests, run with `node --test`. They cover move generation against known node counts (perft), the rating and classification logic, the Stockfish protocol parsing, the move tree, the voice parser, and the explanation and tactic detection, which is the largest suite.
+There are 75 tests, run with `node --test`. They cover move generation against known node counts (perft), the rating and classification logic, the Stockfish protocol parsing, the move tree, the voice parser, the exchange counts behind the safety bars (including a pinned defender), room codes, and the explanation and tactic detection, which is the largest suite. The online game was also tested end to end in a headless browser, with two players against the real database.
 
 **Deployment.** A push to `main` runs the tests and then publishes `web/` to the `gh-pages` branch with a GitHub Actions workflow. GitHub Pages lets browsers cache files for ten minutes, so a fresh `index.html` could load a stale `main.js`. A small script (`stamp-version.mjs`) runs on a copy of `web/` during the build and appends `?v=<commit>` to every CSS and JS URL, including relative imports between modules and the built-in engine's worker. Vendored code is left alone. That removes the "works after a hard refresh" problem.
 
@@ -181,6 +219,6 @@ Most chess tools give you an evaluation bar or a best move after the fact. This 
 
 It has limits. The explanations are pattern checks, so strategic ideas that don't match a pattern get no comment. The in-browser Stockfish is the lite build at modest depth, so a move near a class boundary can change class if you search deeper. Voice input depends on your browser's speech recognition.
 
-The repository has 48 commits between October 29 and November 12.
+The repository has 57 commits between October 29 and November 21.
 
-Try it at [robertpiazza.com/chess-visuals](https://robertpiazza.com/chess-visuals/). Load a position you've been stuck on with "Load position (FEN)" and see which pieces have only red rings.
+Try it at [robertpiazza.com/chess-visuals](https://robertpiazza.com/chess-visuals/). Load a position you've been stuck on with "Load position (FEN)" and see which pieces have only red rings, or send a friend an invite link.
