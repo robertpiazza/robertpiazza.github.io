@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Chess Visuals: a browser chess trainer that rates every legal move"
+title: "Chess Visuals: a visual chess trainer for the browser"
 date: 2026-11-14
 categories: chess
 ---
 
-Chess Visuals is a chess trainer that runs entirely in the browser. On your turn, every one of your pieces gets a small ring that rates its legal moves. You can see which pieces have good options and which only have bad ones before you pick anything up. Select a piece and each square it can move to is rated too, with a short explanation of why.
+Chess Visuals is a visual chess trainer that runs entirely in the browser. It marks up the board with what you'd want to notice before moving. On your turn, a small ring on each of your pieces rates its legal moves, so you can see which pieces have good options and which only have bad ones before you pick anything up. A bar under every piece, yours and your opponent's, shows whether it's protected, loose or about to be lost, and forks, pins and skewers are flagged where they happen. Select a piece and each square it can move to is rated too, with a short explanation of why.
 
 **[Play it here](https://robertpiazza.com/chess-visuals/)**. The source is at [github.com/robertpiazza/chess-visuals](https://github.com/robertpiazza/chess-visuals).
 
